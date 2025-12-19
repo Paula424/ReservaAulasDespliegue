@@ -1,23 +1,23 @@
-# --- Etapa de build ---
-FROM maven:3.9.4-jdk-25 AS build
+# --- Etapa de build (usa Maven con JDK 25) ---
+FROM infotechsoft/maven:3.9.11-jdk-25 AS build
 WORKDIR /app
 
-# Copiamos pom.xml y src
+# Copiamos el pom.xml y el src
 COPY pom.xml .
 COPY src ./src
 
-# Construimos la aplicación y saltamos tests
+# Construimos dejando pasar tests
 RUN mvn clean package -DskipTests
 
-# --- Etapa de runtime ---
+# --- Etapa de runtime (solo para ejecutar) ---
 FROM eclipse-temurin:25-jdk-alpine
 WORKDIR /app
 
-# Copiamos el JAR desde la etapa de build
+# Copiamos el JAR resultante
 COPY --from=build /app/target/*.jar app.jar
 
-# Exponemos el puerto que usa Spring Boot
+# Puerto que usa tu app
 EXPOSE 8080
 
-# Ejecutamos la app
+# Arranca la aplicación
 ENTRYPOINT ["java","-jar","app.jar"]
