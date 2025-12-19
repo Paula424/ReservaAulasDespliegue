@@ -1,5 +1,5 @@
 # --- Etapa de build ---
-FROM maven:3.9.4-eclipse-temurin-25 AS build
+FROM maven:3.9.4-jdk-25 AS build
 WORKDIR /app
 
 # Copiamos pom.xml y src
