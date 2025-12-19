@@ -1,14 +1,13 @@
-# Usamos una imagen base de OpenJDK 25
-FROM eclipse-temurin:25-jdk-alpine
-
-# Directorio de trabajo en el contenedor
+# Build stage
+FROM maven:3.9.4-eclipse-temurin-25 AS build
 WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Copiamos el JAR generado en target/
-COPY target/*.jar app.jar
-
-# Exponemos el puerto que usará Spring Boot
+# Run stage
+FROM eclipse-temurin:25-jdk-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-
-# Comando para ejecutar la aplicación
 ENTRYPOINT ["java","-jar","app.jar"]
