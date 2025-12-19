@@ -1,5 +1,7 @@
 package org.example.reservaaulasdespliegue.Exceptions;
 
+import org.example.reservaaulasdespliegue.DTO.ErrorResponse;
+import org.example.reservaaulasdespliegue.DTO.FieldError;
 import org.example.reservaaulasdespliegue.DTO.ValidationErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

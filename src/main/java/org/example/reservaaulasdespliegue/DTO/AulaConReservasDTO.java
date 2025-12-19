@@ -19,7 +19,7 @@ package org.example.reservaaulasdespliegue.DTO;
  *   ]
  * }
  */
-public record AulaConReservaDTO(
+public record AulaConReservasDTO(
         Long id,
         String nombre,
         Integer capacidad,
